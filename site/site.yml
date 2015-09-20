@@ -29,3 +29,12 @@
       service: name=nginx enabled=yes state=restarted
     - name: Restart PHP-FPM
       service: name=php5-fpm enabled=yes state=restarted
+
+- hosts: bronytv-web
+  remote_user: root
+  name: Configure unattended apt upgrades
+  tasks:
+    - name: Install unattended-upgrades
+      apt: name=unattended-upgrades state=latest
+    - name: Copy unattended-upgrades config
+      copy: src=files/50unattended-upgrades dest=/etc/apt/apt.conf.d/50unattended-upgrades owner=root group=root mode=0660
