@@ -1,0 +1,30 @@
+- hosts: bronytv-web
+  remote_user: root
+  tasks:
+    - name: Update APT cache
+      apt: update_cache=yes
+    - name: Install nginx
+      apt: name=nginx state=latest
+    - name: Install PHP-FPM
+      apt: name=php5-fpm state=latest
+
+    - name: Remove default nginx virtual host
+      file: name=/etc/nginx/sites-enabled/default state=absent
+    - name: Copy nginx config
+      copy: src=files/nginx.conf dest=/etc/nginx/nginx.conf owner=root group=root mode=0660
+    - name: Copy nginx vhost
+      copy: src=files/bronytv.conf dest=/etc/nginx/sites-enabled/bronytv owner=root group=root mode=0660
+    - name: Create website directory
+      file: name=/var/www/bronytv state=directory owner=www-data group=www-data mode=0770
+
+    - name: Install Git
+      apt: name=git state=latest
+    - name: Clone website
+      git: clone=yes repo=https://github.com/BronyTV/bronytv.net.git dest=/var/www/bronytv
+      become_user: www-data
+      become: yes
+
+    - name: Restart nginx
+      service: name=nginx enabled=yes state=restarted
+    - name: Restart PHP-FPM
+      service: name=php5-fpm enabled=yes state=restarted
