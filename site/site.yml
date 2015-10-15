@@ -41,6 +41,8 @@
       copy: src=files/private/ssl.crt dest=/etc/nginx/certs/bronytv.crt owner=root group=root mode=0660
     - name: Copy SSL private key
       copy: src=files/private/ssl.key dest=/etc/nginx/certs/bronytv.key owner=root group=root mode=0660
+    - name: Copy SSL DH params
+      copy: src=files/private/dh.pem dest=/etc/nginx/certs/dh.pem owner=root group=root mode=0660
 
     - name: Install Git
       apt: name=git state=latest
