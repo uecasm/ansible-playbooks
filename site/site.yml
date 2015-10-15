@@ -20,6 +20,8 @@
       pip: name=flask state=latest
     - name: Install Python requests
       pip: name=requests state=latest
+    - name: Install SQLAlchemy
+      pip: name=flask-sqlalchemy state=latest
 
     - name: Remove default nginx virtual host
       file: name=/etc/nginx/sites-enabled/default state=absent
