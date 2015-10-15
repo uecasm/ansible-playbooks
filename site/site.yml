@@ -8,22 +8,22 @@
       apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main'
     - name: Update APT cache
       apt: update_cache=yes
-    - name: Install nginx
-      apt: name=nginx-extras state=latest
-    - name: Install Phusion Passenger
-      apt: name=passenger state=latest
-    - name: Install Python
-      apt: name=python state=latest
-    - name: Install PIP
-      apt: name=python-pip state=latest
-    - name: Install Python Flask
-      pip: name=flask state=latest
-    - name: Install PostgreSQL
-      apt: name=postgresql state=latest
-    - name: Install Python requests
-      pip: name=requests state=latest
-    - name: Install SQLAlchemy
-      pip: name=flask-sqlalchemy state=latest
+    - name: Install required APT packages
+      apt: name={{ item }} state=latest
+      with_items:
+        - nginx-extras
+        - passenger
+        - python
+        - python-pip
+        - postgresql
+
+    - name: Install required PIP packages
+      pip: name={{ item }} state=latest
+      with_items:
+        - flask
+        - flask-sqlalchemy
+        - psycopg2
+        - requests
 
     - name: Remove default nginx virtual host
       file: name=/etc/nginx/sites-enabled/default state=absent
