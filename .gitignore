@@ -1,1 +1,3 @@
 site/test.host
+site/files/private/*
+!site/files/private/.placeholder
