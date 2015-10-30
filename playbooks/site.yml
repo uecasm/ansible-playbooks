@@ -1,0 +1,6 @@
+- hosts: bronytv-web
+  remote_user: root
+  roles:
+    - ../../roles/web
+    - ../../roles/unattended-upgrades
+

@@ -1,0 +1,4 @@
+- name: Add unattended upgrades configs
+  copy: src=10periodic dest=/etc/apt/apt.conf.d/10periodic owner=root group=root mode=0664
+  copy: src=50unattended-upgrades dest=/etc/apt/apt.conf.d/50unattended-upgrades owner=root group=root mode=0664
+

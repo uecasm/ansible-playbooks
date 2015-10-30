@@ -1,0 +1,51 @@
+- name: Add Phusion APT key
+  apt_key: keyserver=keyserver.ubuntu.com id=561F9B9CAC40B2F7
+- name: Add Phusion Repository
+  apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main'
+- name: Update APT cache
+  apt: update_cache=yes
+- name: Install required APT packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - nginx-extras
+    - passenger
+    - python
+    - python-pip
+    - postgresql
+    - git
+
+- name: Install required PIP packages
+  pip: name={{ item }} state=latest
+  with_items:
+    - flask
+    - flask-sqlalchemy
+    - psycopg2
+    - requests
+    - bcrypt
+
+- name: Remove default nginx virtual host
+  file: name=/etc/nginx/sites-enabled/default state=absent
+- name: Copy nginx config
+  copy: src=nginx.conf dest=/etc/nginx/nginx.conf owner=root group=root mode=0660
+- name: Copy nginx vhost
+  copy: src=bronytv.conf dest=/etc/nginx/sites-enabled/bronytv owner=root group=root mode=0660
+- name: Create website directory
+  file: name=/var/www/bronytv state=directory owner=www-data group=www-data mode=0770
+
+- name: Create SSL directory
+  file: name=/etc/nginx/certs state=directory owner=root group=root mode=0770
+- name: Copy SSL certificate
+  copy: src=private/ssl.crt dest=/etc/nginx/certs/bronytv.crt owner=root group=root mode=0660
+- name: Copy SSL private key
+  copy: src=private/ssl.key dest=/etc/nginx/certs/bronytv.key owner=root group=root mode=0660
+- name: Copy SSL DH params
+  copy: src=private/dh.pem dest=/etc/nginx/certs/dh.pem owner=root group=root mode=0660
+
+- name: Deploy website
+  git: clone=yes repo=https://github.com/BronyTV/bronytv.net.git dest=/var/www/bronytv
+  become_user: www-data
+  become: yes
+
+- name: Restart nginx
+  service: name=nginx enabled=yes state=restarted
+

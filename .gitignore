@@ -1,3 +1,2 @@
-site/test.host
-site/files/private/*
-!site/files/private/.placeholder
+roles/web/files/private/*
+!roles/web/files/private/.placeholder
