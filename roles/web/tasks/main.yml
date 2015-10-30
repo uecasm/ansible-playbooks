@@ -22,6 +22,7 @@
     - psycopg2
     - requests
     - bcrypt
+    - alembic
 
 - name: Remove default nginx virtual host
   file: name=/etc/nginx/sites-enabled/default state=absent
@@ -45,6 +46,8 @@
   git: clone=yes repo=https://github.com/BronyTV/bronytv.net.git dest=/var/www/bronytv
   become_user: www-data
   become: yes
+- name: Run Alembic migrations
+  command: /usr/local/bin/alembic upgrade head chdir=/var/www/bronytv 
 
 - name: Restart nginx
   service: name=nginx enabled=yes state=restarted
