@@ -23,6 +23,9 @@
     - requests
     - bcrypt
     - alembic
+    - flask-compressor
+    - cssmin
+    - jsmin
 
 - name: Remove default nginx virtual host
   file: name=/etc/nginx/sites-enabled/default state=absent
