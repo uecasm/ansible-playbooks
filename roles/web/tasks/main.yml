@@ -7,9 +7,12 @@
 - name: Install required APT packages
   apt: name={{ item }} state=latest
   with_items:
-    - nginx-extras
+    - nginx
     - passenger
     - python
+    - python-dev
+    - libpq-dev
+    - libffi-dev
     - python-pip
     - postgresql
     - git
@@ -23,7 +26,7 @@
     - requests
     - bcrypt
     - alembic
-    - flask-compressor
+    - flask-assets
     - cssmin
     - jsmin
 
