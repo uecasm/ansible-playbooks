@@ -42,7 +42,7 @@
 - name: Create SSL directory
   file: name=/etc/nginx/certs state=directory owner=root group=root mode=0770
 - name: Copy SSL certificate
-  copy: src=private/ssl.crt dest=/etc/nginx/certs/bronytv.crt owner=root group=root mode=0660
+  copy: src=ssl.crt dest=/etc/nginx/certs/bronytv.crt owner=root group=root mode=0660
 - name: Copy SSL private key
   copy: src=private/ssl.key dest=/etc/nginx/certs/bronytv.key owner=root group=root mode=0660
 - name: Copy SSL DH params
