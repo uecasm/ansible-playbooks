@@ -3,4 +3,9 @@
   roles:
     - ../../roles/web
     - ../../roles/unattended-upgrades
-
+    - role: ../../roles/letsencrypt
+      letsencrypt_webroot_path: /var/www/letsencrypt
+      letsencrypt_email: admin@bronytv.net
+      letsencrypt_cert_domains:
+        - bronytv.net
+        - www.bronytv.net
