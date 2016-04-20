@@ -10,6 +10,8 @@
   npm: path=/home/dusk/webirc
 - name: Unlock configuration file
   command: git-crypt unlock /home/dusk/crypt.key
+  args:
+    chdir: /root/ansible-playbooks
 - name: Copy configuration file
   copy: src=config.js dest=/home/dusk/webirc/config.js owner=dusk group=dusk mode=0660
 - name: Build KiwiIRC
