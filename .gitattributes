@@ -1,1 +1,1 @@
-config.js filter=git-crypt diff=git-crypt
+/roles/webirc/files/config.js filter=git-crypt diff=git-crypt
