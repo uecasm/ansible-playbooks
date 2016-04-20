@@ -1,0 +1,26 @@
+- name: Deploy webirc
+  git: clone=yes repo=https://github.com/BronyTV/BTV-IRC.git dest=/home/dusk/webirc
+  become_user: dusk
+  become: yes
+- name: Ensure git-crypt is installed
+  apt: name=git-crypt state=present
+- name: Install npm
+  apt: name=npm state=present
+- name: Install KiwiIRC
+  npm: path=/home/dusk/webirc
+- name: Unlock configuration file
+  command: git-crypt unlock /home/dusk/crypt.key
+- name: Copy configuration file
+  copy: src=config.js dest=/home/dusk/webirc/config.js owner=dusk group=dusk mode=0660
+- name: Build KiwiIRC
+  command: ./kiwi build
+  args:
+    chdir: /home/dusk/webirc/
+- name: Stop any old instances
+  command: ./kiwi stop
+  args:
+    chdir: /home/dusk/webirc/
+- name: Start KiwiIRC
+  command: ./kiwi start
+  args:
+    chdir: /home/dusk/webirc/
