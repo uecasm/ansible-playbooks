@@ -11,3 +11,4 @@
         - www.bronytv.net
     - role: ../../roles/webirc
       webirc_user: dusk
+      kiwiirc_git: https://github.com/BronyTV/BTV-IRC.git
