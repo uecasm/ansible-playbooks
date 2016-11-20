@@ -2,23 +2,20 @@
   git: clone=yes repo={{ kiwiirc_git }} dest=/home/{{ webirc_user }}/webirc
   become_user: "{{ webirc_user }}"
   become: yes
-- name: Ensure git-crypt is installed
-  apt: name=git-crypt state=present
-- name: Install npm
-  apt: name=npm state=present
+- name: Install the required APT packages
+  apt: name={{ item }} state=latest
+  with_items:
+  - git-crypt
+  - npm
 - name: Install KiwiIRC
   npm: path=/home/{{ webirc_user }}/webirc
+- name: Copy SystemD unit file
+  template: src=webirc.service.j2 dest=/etc/systemd/system/webirc.service mode=0600 owner=root group=root
 - name: Copy configuration file
   copy: src=config.js dest=/home/{{ webirc_user }}/webirc/config.js owner={{ webirc_user }} group={{ webirc_user }} mode=0660
 - name: Build KiwiIRC
   command: ./kiwi build
   args:
     chdir: /home/{{ webirc_user }}/webirc/
-- name: Stop any old instances
-  command: ./kiwi stop
-  args:
-    chdir: /home/{{ webirc_user }}/webirc/
-- name: Start KiwiIRC
-  command: ./kiwi start
-  args:
-    chdir: /home/{{ webirc_user }}/webirc/
+- name: Restart KiwiIRC
+  service: name=webirc state=restarted enabled=yes

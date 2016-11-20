@@ -1,0 +1,14 @@
+[Unit]
+Description=KiwiiIRC Server
+After=network.target
+
+[Service]
+Type=forking
+User={{ webirc_user }}
+WorkingDirectory=/home/{{ webirc_user }}/webirc/
+ExecStart=/home/{{ webirc_user }}/webirc/kiwi start
+ExecStop=/home/{{ webirc_user }}/webirc/kiwi stop
+PIDFile=/home/{{ webirc_user }}/webirc/kiwiirc.pid
+
+[Install]
+WantedBy=multi-user.target
