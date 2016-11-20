@@ -1,5 +1,5 @@
 - name: Deploy webirc
-  git: clone=yes repo=https://github.com/BronyTV/BTV-IRC.git dest=/home/{{ webirc_user }}/webirc
+  git: clone=yes repo={{ kiwiirc_git }} dest=/home/{{ webirc_user }}/webirc
   become_user: "{{ webirc_user }}"
   become: yes
 - name: Ensure git-crypt is installed
