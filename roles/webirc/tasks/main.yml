@@ -14,6 +14,6 @@
 - name: Copy configuration file
   copy: src=config.js dest=/home/{{ webirc_user }}/webirc/config.js owner={{ webirc_user }} group={{ webirc_user }} mode=0660
 - name: Build KiwiIRC
-  service: name=webirc state=reloaded
+  systemd: daemon_reload=yes name=webirc state=reloaded
 - name: Restart KiwiIRC
-  service: name=webirc state=restarted enabled=yes
+  systemd: name=webirc state=restarted enabled=yes
