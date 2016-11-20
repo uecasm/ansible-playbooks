@@ -9,4 +9,5 @@
       letsencrypt_cert_domains:
         - bronytv.net
         - www.bronytv.net
-    - ../../roles/webirc
+    - role: ../../roles/webirc
+      webirc_user: dusk

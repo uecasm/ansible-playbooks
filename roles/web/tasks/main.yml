@@ -1,7 +1,7 @@
 - name: Add Phusion APT key
   apt_key: keyserver=keyserver.ubuntu.com id=561F9B9CAC40B2F7
 - name: Add Phusion Repository
-  apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main'
+  apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger xenial main'
 - name: Update APT cache
   apt: update_cache=yes
 - name: Install required APT packages

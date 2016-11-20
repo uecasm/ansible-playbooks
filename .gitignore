@@ -1,3 +1,7 @@
 roles/web/files/private/*
 !roles/web/files/private/.placeholder
 !roles/web/files/private/ssl.crt
+crypt.key
+.idea/
+*.retry
+
