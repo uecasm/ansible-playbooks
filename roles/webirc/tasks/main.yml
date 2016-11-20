@@ -14,8 +14,6 @@
 - name: Copy configuration file
   copy: src=config.js dest=/home/{{ webirc_user }}/webirc/config.js owner={{ webirc_user }} group={{ webirc_user }} mode=0660
 - name: Build KiwiIRC
-  command: ./kiwi build
-  args:
-    chdir: /home/{{ webirc_user }}/webirc/
+  service: name=webirc state=reloaded
 - name: Restart KiwiIRC
   service: name=webirc state=restarted enabled=yes
