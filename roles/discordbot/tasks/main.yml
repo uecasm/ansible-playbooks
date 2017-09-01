@@ -6,7 +6,7 @@
   pip:
     requirements: /home/static/Static-The-Discord-Bot/requirements.txt
     state: latest
-    binary: /usr/bin/pip3
+    executable: /usr/bin/pip3
 
 - name: Restart discord bot
   service: name=discordstaticbot state=restarted enabled=yes
