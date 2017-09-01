@@ -1,0 +1,10 @@
+- name: Clone repository
+  git: clone=yes repo=https://github.com/TitanEmbeds/Titan.git dest=/home/static/Static-The-Discord-Bot
+
+- name: Install required PIP packages
+  pip:
+    requirements: /home/static/Static-The-Discord-Bot/requirements.txt
+    state: latest
+
+- name: Restart discord bot
+  systemd: name=discordstaticbot state=restarted enabled=yes
