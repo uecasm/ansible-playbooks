@@ -1,5 +1,5 @@
 - name: Clone repository
-  git: clone=yes repo=https://github.com/TitanEmbeds/Titan.git dest=/home/static/Static-The-Discord-Bot
+  git: clone=yes repo=https://github.com/BronyTV/Static-The-Discord-Bot.git dest=/home/static/Static-The-Discord-Bot
 
 - name: Install required PIP packages
   pip:
