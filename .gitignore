@@ -4,4 +4,4 @@ roles/web/files/private/*
 crypt.key
 .idea/
 *.retry
-
+playbooks/private/*
