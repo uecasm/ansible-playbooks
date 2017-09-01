@@ -8,4 +8,4 @@
     state: latest
 
 - name: Restart discord bot
-  systemd: name=discordstaticbot state=restarted enabled=yes
+  service: name=discordstaticbot state=restarted enabled=yes
