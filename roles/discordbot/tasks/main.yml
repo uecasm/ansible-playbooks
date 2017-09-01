@@ -1,5 +1,6 @@
 - name: Clone repository
   git: clone=yes repo=https://github.com/BronyTV/Static-The-Discord-Bot.git dest=/home/static/Static-The-Discord-Bot
+  become_user: static
 
 - name: Install required PIP packages
   pip:
