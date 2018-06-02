@@ -1,0 +1,19 @@
+[Unit]
+Description=BronyTV gunicorn daemon
+After=network.target
+
+[Service]
+PIDFile=/run/btv-gunicorn/pid
+User=www-data
+Group=www-data
+RuntimeDirectory=btv-gunicorn
+WorkingDirectory=/var/www/bronytv
+ExecStart=/usr/local/bin/gunicorn --pid /run/btv-gunicorn/pid \
+	--bind localhost:8000 -k eventlet -w 1 passenger_wsgi
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target nginx.service

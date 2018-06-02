@@ -1,14 +1,9 @@
-- name: Add Phusion APT key
-  apt_key: keyserver=keyserver.ubuntu.com id=561F9B9CAC40B2F7
-- name: Add Phusion Repository
-  apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger xenial main'
 - name: Update APT cache
   apt: update_cache=yes
 - name: Install required APT packages
   apt: name={{ item }} state=latest
   with_items:
     - nginx
-    - passenger
     - python
     - python-dev
     - libpq-dev
@@ -22,10 +17,13 @@
   with_items:
     - flask
     - flask-sqlalchemy
+    - flask-socketio
     - psycopg2
     - requests
     - bcrypt
     - alembic
+    - gunicorn
+    - eventlet
     - flask-assets
     - cssmin
     - jsmin
@@ -36,6 +34,8 @@
   copy: src=nginx.conf dest=/etc/nginx/nginx.conf owner=root group=root mode=0660
 - name: Copy nginx vhost
   copy: src=bronytv.conf dest=/etc/nginx/sites-enabled/bronytv owner=root group=root mode=0660
+- name: Copy gunicorn service
+  copy: src=btv-gunicorn.service dest=/etc/systemd/system/btv-gunicorn.service owner=root group=root mode=0660
 - name: Create website directory
   file: name=/var/www/bronytv state=directory owner=www-data group=www-data mode=0770
 
@@ -51,6 +51,10 @@
 - name: Run Alembic migrations
   command: /usr/local/bin/alembic upgrade head chdir=/var/www/bronytv 
 
+- name: Reload services
+  systemd: daemon_reload=yes
+- name: Enable gunicorn
+  systemd: name=btv-gunicorn.service enabled=yes state=restarted
 - name: Restart nginx
   service: name=nginx enabled=yes state=restarted
 
